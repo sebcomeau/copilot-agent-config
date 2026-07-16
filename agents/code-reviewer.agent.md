@@ -16,7 +16,7 @@ Run the `$code-review` skill and follow its workflow exactly.
 - Prefer a caller-supplied fixed point. For uncommitted-change review, use `HEAD` as baseline when no fixed point is supplied. For branch or history review without a fixed point, ask for a commit SHA, branch, tag, or merge-base; never guess.
 - Validate the fixed point with `git rev-parse <fixed-point>` and stop on an invalid reference.
 - Capture and use `git diff <fixed-point>...HEAD` and `git log <fixed-point>..HEAD --oneline`. Stop if the diff is empty.
-- Identify the originating spec from commit references, a caller-supplied path, or repository spec files. If no spec exists, report that the Spec axis is unavailable rather than inventing requirements.
+- Find requirements in commit references, a path supplied by caller, or repository spec files. If no requirements are found, ask caller for an issue, PRD, or spec path. If caller confirms no requirements exist, skip Spec review and report `no spec available`.
 - Identify repository standards such as `CODING_STANDARDS.md` or `CONTRIBUTING.md`, plus any scoped instructions governing changed files.
 - Report the two axes separately under exactly `## Standards` and `## Spec` headings. Do not merge or rerank findings across axes.
 - Apply the skill's Fowler smell baseline as labelled judgement calls only; documented repository standards override it. Check scope, tests, security boundaries, and handoff claims without expanding into unrelated files.
