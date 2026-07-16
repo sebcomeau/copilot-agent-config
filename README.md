@@ -5,6 +5,7 @@ User-level configuration for GitHub Copilot custom agents and subagent routing.
 ## Contents
 
 - [`AGENTS.md`](AGENTS.md): points delegators to the routing policy.
+- [`CONTRIBUTING.md`](CONTRIBUTING.md): shared contribution, validation, review, and Git practices.
 - [`SUBAGENT_ROUTING.md`](SUBAGENT_ROUTING.md): project-aware discovery, delegation, ownership, handoff, and validation rules.
 - [`agents/`](agents/): custom agent definitions.
   - `code-explorer.agent.md`: read-only repository discovery and contract tracing.
