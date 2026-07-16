@@ -14,6 +14,8 @@ User-level configuration for GitHub Copilot custom agents and subagent routing.
   - `commit-pusher.agent.md`: explicit commit-and-push publishing workflow.
   - `implementer.agent.md`: multi-file implementation and unit-test work.
   - `quick-implementer.agent.md`: localized, low-risk changes.
+- [`skills/`](skills/): repository-owned Agent Skills.
+  - [`code-review`](skills/code-review/SKILL.md): Copilot-native two-axis Standards and Spec review.
 
 ## Routing Principles
 
@@ -25,19 +27,15 @@ Agents should:
 4. Preserve unrelated user and agent changes in the shared workspace.
 5. Use focused validation for affected files or selectors.
 
-Behavioral verification is normally delegated to `code-validator` after implementation. `code-reviewer` requires a valid Git fixed point. `commit-pusher` requires an explicit request to both commit and push.
+Behavioral verification is normally delegated to `code-validator` after implementation. `code-reviewer` requires a valid Git fixed point for branch or history reviews; current uncommitted or staged reviews use `HEAD`. `commit-pusher` requires an explicit request to both commit and push.
 
-## Required `code-review` Skill
+## `code-review` Skill
 
-The `code-reviewer` agent requires Matt Pocock's `code-review` skill. Install it globally for GitHub Copilot with:
-
-```bash
-npx skills add https://github.com/mattpocock/skills -g -a github-copilot --skill code-review
-```
+The `code-reviewer` agent uses the repository-owned skill at [`skills/code-review/SKILL.md`](skills/code-review/SKILL.md). Because this repository is the user-level `.copilot` directory, the skill is available globally across projects when this folder is used as `~/.copilot`.
 
 ## Git Tracking
 
-[`.gitignore`](.gitignore) uses a whitelist. It keeps this README, `.gitignore`, `AGENTS.md`, `SUBAGENT_ROUTING.md`, and `agents/*.agent.md` visible to Git while ignoring local settings, logs, caches, command history, and session state.
+[`.gitignore`](.gitignore) uses a whitelist. It keeps this README, `.gitignore`, `AGENTS.md`, `SUBAGENT_ROUTING.md`, `agents/*.agent.md`, and `skills/*/SKILL.md` visible to Git while ignoring local settings, logs, caches, command history, and session state.
 
 ## Scope
 
