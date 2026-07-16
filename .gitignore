@@ -1,0 +1,14 @@
+# Ignore everything by default.
+*
+
+# Keep this ignore file itself.
+!.gitignore
+
+# Keep the root routing and agent instructions.
+!README.md
+!AGENTS.md
+!SUBAGENT_ROUTING.md
+
+# Keep the agents directory and all agent markdown files.
+!agents/
+!agents/*.agent.md
