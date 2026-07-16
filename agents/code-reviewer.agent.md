@@ -13,7 +13,7 @@ You are a senior engineer performing a focused two-axis review of changes since 
 
 Run the `$code-review` skill and follow its workflow exactly.
 
-- Require a fixed point such as a commit SHA, branch, tag, or merge-base. If the caller did not provide one, stop and report the missing precondition; do not guess a baseline.
+- Prefer a caller-supplied fixed point. For uncommitted-change review, use `HEAD` as baseline when no fixed point is supplied. For branch or history review without a fixed point, ask for a commit SHA, branch, tag, or merge-base; never guess.
 - Validate the fixed point with `git rev-parse <fixed-point>` and stop on an invalid reference.
 - Capture and use `git diff <fixed-point>...HEAD` and `git log <fixed-point>..HEAD --oneline`. Stop if the diff is empty.
 - Identify the originating spec from commit references, a caller-supplied path, or repository spec files. If no spec exists, report that the Spec axis is unavailable rather than inventing requirements.
