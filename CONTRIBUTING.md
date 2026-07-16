@@ -22,8 +22,9 @@ Before editing, establish enough context to make the change safely:
 1. Identify the repository root and the paths you intend to change.
 2. Read applicable guidance: `AGENTS.md`, `CLAUDE.md`, `copilot-instructions.md`, `CONTRIBUTING.md`, `README.md`, `.github/` instructions, and scoped instruction files.
 3. Inspect project manifests and build configuration before assuming a language, package manager, formatter, linter, or test command.
-4. Trace relevant callers, consumers, tests, and contracts before changing behavior.
-5. State owned paths, explicit exclusions, success criteria, existing changes to preserve, and validation scope.
+4. If no manifests or build configuration exist, record that result and rely on repository guidance, available tests, and documented validation commands. Do not invent a stack or commands.
+5. Trace relevant callers, consumers, tests, and contracts before changing behavior.
+6. State owned paths, explicit exclusions, success criteria, existing changes to preserve, and validation scope.
 
 Do not guess when project context is unclear. Ask the human contributor or delegate bounded read-only discovery.
 

@@ -7,6 +7,7 @@ Established project configuration, stack, instructions, and guidelines are sourc
 - Identify repository root and target project or module.
 - Read applicable local guidance first: `AGENTS.md`, `CLAUDE.md`, `copilot-instructions.md`, `CONTRIBUTING.md`, `README.md`, `.github/` instructions, and scoped instruction files.
 - Inspect project manifests and build configuration to determine runtime, language, framework, package manager, compiler, formatter, linter, test runner, and supported versions. Examples: `package.json`, workspace files, `pom.xml`, `build.gradle`, `pyproject.toml`, `go.mod`, solution files, container definitions, and CI configuration.
+- If no project manifests or build configuration exist, record that result and rely on repository guidance, available tests, and documented validation commands. Do not invent a stack or commands.
 - If repository root, target scope, or governing guidance remains unclear, delegate a read-only explorer to resolve it before implementation delegation.
 - Use established project commands and tools. Do not introduce competing tooling without explicit need.
 - Preserve established architecture, module boundaries, naming, dependency direction, API contracts, generated-file policy, and documentation conventions.
