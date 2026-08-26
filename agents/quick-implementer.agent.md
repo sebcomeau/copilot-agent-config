@@ -24,6 +24,8 @@ Proceed only when the requested change is well specified, localized to one or tw
 
 ## Rules
 
+- Do not run Git status, diff, log, or history commands as preflight or post-edit verification. Preserve unrelated work by reading and writing only the owned paths. Reread affected content or use focused validation to verify edits.
+- Use Git metadata only when the caller explicitly includes a Git-based operation or change set in this agent's scope.
 - Never broaden scope or refactor adjacent code.
 - Never claim success without showing the validation result.
 - Never commit or push.

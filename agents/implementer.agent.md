@@ -21,6 +21,8 @@ You write the actual code and its unit tests within the caller's assigned owners
 
 ## Rules
 
+- Do not inspect staged, unstaged, committed, branch, or history changes unless the caller explicitly makes that Git change set part of the implementation task.
+- Do not use Git status or diff to discover scope, preserve unrelated work, or confirm edits. Honor the assigned ownership boundary, use path-limited operations, and verify work through rereading or focused structural checks.
 - Never claim behavioral verification or green tests that a `code-validator` has not reported.
 - Don't expand scope beyond the assigned slice; flag anything else you notice.
 - Never mark your own work as reviewed — that's the code-reviewer's job.

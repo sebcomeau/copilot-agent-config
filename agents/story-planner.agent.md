@@ -89,9 +89,8 @@ Return these sections in order:
 
 ## Rules
 
-- Do not modify product files, tests, configuration, or documentation.
-- Do not create, update, link, close, or delete tracker items without the publication
-  approval contract.
+- Do not inspect working-tree, staged, or branch changes unless the caller explicitly identifies Git history as planning evidence. Ground plans in tracker evidence and named repository content rather than routine Git preflight.
+- Do not create, update, link, close, or delete tracker items without the publication approval contract.
 - Do not commit or push any repository changes.
 - Do not invent requirements, APIs, reference data, audit behavior, or design details.
 - Support stories in any project type or stack, including work that intentionally crosses

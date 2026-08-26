@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Review committed, staged, or uncommitted changes against repository standards and intended requirements. Use for code review, branch review, PR review, fixed-point review, standards review, spec review, or finding bugs and regressions.
+description: Review committed, staged, or uncommitted changes and named-path current-tree content against repository standards and intended requirements. Use for code review, branch review, PR review, fixed-point review, content review, standards review, spec review, or finding bugs and regressions.
 ---
 
 # Code Review
@@ -12,7 +12,7 @@ Perform a read-only two-axis review. Keep Standards and Spec findings separate. 
 Accept these optional caller inputs:
 
 - Fixed point: commit SHA, branch, tag, or merge-base.
-- Spec or requirements path: issue export, PRD, requirements document, or feature specification.
+- Spec or requirements: inline caller requirements or a path to an issue export, PRD, requirements document, or feature specification.
 - Standards path: repository coding standards or scoped instruction file.
 - Review scope: committed history, current changes, staged-only changes, or current-tree content at a named path.
 
@@ -46,13 +46,14 @@ If the caller supplies no fixed point:
    ```
 
    `git diff HEAD` already combines staged and unstaged tracked changes. Read relevant untracked files directly; never treat ignored or unrelated files as part of the review.
+
 5. For staged-only review, capture:
 
    ```text
    git diff --cached
    ```
 
-6. For current-tree content review, read only the named paths, governing guidance, and direct dependencies needed to assess them. State explicitly that no Git change set was reviewed.
+6. For current-tree content review, read only the named paths, governing guidance, and direct dependencies needed to assess them. Do not run `git status`, `git diff`, `git log`, `git rev-parse`, or equivalent Git discovery commands. State explicitly that no Git change set was reviewed. Preserve unrelated work through the declared path scope, not by inventorying the working tree.
 7. Stop and report a blocked review when a supplied fixed point is invalid or a diff-based mode has no in-scope changed content. An empty tracked diff is not empty scope when relevant untracked files are present.
 8. Record the review mode, exact paths, and selectors in scope. Do not inspect unrelated files except governing guidance and direct dependencies needed to understand a finding.
 
@@ -60,8 +61,8 @@ If the caller supplies no fixed point:
 
 Find intended behavior in this order:
 
-1. Issue references in commit messages, such as `#123`, `Closes #45`, or GitLab `!67`.
-2. A spec, issue export, PRD, or requirements path supplied by the caller.
+1. Inline requirements or a spec, issue export, PRD, or requirements path supplied by the caller.
+2. For fixed-point history review only, issue references in commit messages within `<fixed-point>..HEAD`, such as `#123`, `Closes #45`, or GitLab `!67`.
 3. Repository files under `docs/`, `specs/`, `.scratch/`, or another clearly named requirements location.
 
 Only fetch issue details when the repository provides an issue-tracker workflow and the required configuration exists. Never claim issue-linked requirements were fetched when that configuration is missing.

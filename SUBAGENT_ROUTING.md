@@ -22,6 +22,14 @@ Optimize monetary cost above latency. Delegate when work requires multi-file dis
 
 At task start, delegate qualifying workstreams or record why delegation is not worthwhile. Reassess after major checkpoints. Delegate bounded workstreams with explicit, non-overlapping ownership.
 
+Git inspection is capability-triggered, not routine preflight:
+
+- `quick-implementer`, `implementer`, `code-explorer`, `code-validator`, and `story-planner` do not inspect Git state unless the delegated task explicitly requires Git metadata.
+- `code-reviewer` inspects Git only for an explicitly selected diff-based review mode. A named-path content review must not inspect Git state.
+- `commit-pusher` may inspect status, branches, and scoped diffs because Git publication is its assigned responsibility.
+
+Preserve unrelated work through explicit path ownership and path-limited operations. Do not ask an agent to inventory the working tree merely to identify changes it should preserve.
+
 Keep tightly coupled experiment-selection loops in parent; delegate execution or result analysis when independently separable. Do not delegate overall objective without a bounded slice, success criteria, and validation scope.
 
 Execute directly only for truly trivial operations where agent startup would exceed the work: a single known-line edit, one short command, or a factual response. Do not delegate trivial conversation. The parent may run ordinary commands needed for routing, integration, or concise final verification, but should delegate repository execution rather than handling substantial discovery, implementation, conflict resolution, or review itself. A slow command alone is not a reason to delegate runner work; use an execution agent when diagnosis, output analysis, or independent parallel execution is substantial.
@@ -46,7 +54,7 @@ Select custom agents by their exact `name` from `~/.copilot/agents`:
 - Broad repository discovery, contract or data-flow tracing -> `code-explorer`
 - Mechanical one- or two-file change -> `quick-implementer`
 - Multi-file behavior change, debugging, or substantial tests -> `implementer`
-- Focused read-only test, build, lint, or type-check execution -> `code-validator`
+- Focused read-only test, build, lint, type-check, parsing, or documentation-check execution -> `code-validator`
 - Independent review only for high-risk, security-sensitive, architectural, public-API, migration, concurrency, or difficult-to-validate changes -> `code-reviewer`
 - Commit and push, only when the user explicitly requests both -> `commit-pusher`
 

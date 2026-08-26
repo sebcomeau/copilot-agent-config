@@ -116,7 +116,7 @@ Cover these topics when relevant:
 - Existing shared flows versus UI this story must implement.
 - Audit, privacy, logging, telemetry, authorization, and sensitive-data constraints.
 - Localization and internationalization, accessibility, compatibility, performance, and
-   testing expectations.
+  testing expectations.
 - Explicit exclusions and future integration boundaries.
 - Dependencies on other stories, tasks, teams, contracts, or unsettled designs.
 
@@ -161,20 +161,25 @@ Use this template for every task:
 
 ```markdown
 ## Summary
+
 Brief statement of the task outcome.
 
 ## Design
+
 Relevant design, specification, architecture, data-model, runbook, or other artifact links
 and authoritative notes.
 
 ## Scope
+
 - Implementation responsibilities.
 - Boundaries and exclusions.
 
 ## Acceptance criteria
+
 - Observable, testable completion conditions.
 
 ## Dependencies
+
 - Predecessor work items.
 - External contracts, policies, or shared flows.
 ```
@@ -275,11 +280,11 @@ did not complete.
 - Do not create, update, link, close, or delete work items without explicit approval.
 - Do not invent requirements to make the task plan appear complete.
 - Backend, frontend, infrastructure, audit, E2E, shared-workflow, and cross-team stories
-   are all valid. Include every surface directly required by the story, its acceptance
-   criteria, repository evidence, or an explicit user decision.
+  are all valid. Include every surface directly required by the story, its acceptance
+  criteria, repository evidence, or an explicit user decision.
 - Do not expand into additional stacks, services, repositories, or team ownership without
-   evidence or approval. When required scope crosses a boundary, make ownership,
-   dependencies, and validation for every affected side explicit.
+  evidence or approval. When required scope crosses a boundary, make ownership,
+  dependencies, and validation for every affected side explicit.
 - Do not treat provisional visual placement as more authoritative than an approved
   business rule.
 - Do not commit or push customization or product repository changes unless explicitly

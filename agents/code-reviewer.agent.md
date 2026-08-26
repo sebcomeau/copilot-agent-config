@@ -1,6 +1,6 @@
 ---
 name: "code-reviewer"
-description: "Senior code reviewer. Use when reviewing committed, staged, or uncommitted changes against repository standards and intended requirements. Runs separate Standards and Spec review. Review-only — reports findings and does not implement fixes."
+description: "Senior code reviewer. Use when reviewing committed, staged, or uncommitted changes or named-path current-tree content against repository standards and intended requirements. Runs separate Standards and Spec review. Review-only — reports findings and does not implement fixes."
 model: GPT-5.6 Sol (copilot)
 reasoning_effort: medium
 ---
@@ -15,6 +15,10 @@ Run the repository-owned `$code-review` skill and follow its workflow exactly. U
 
 - Let the skill own review-mode classification, Git capture, requirements discovery, standards selection, finding structure, and report format. Do not substitute a competing procedure.
 - For branch, PR, or history review without a caller-supplied fixed point, stop and request one. Explicit current, uncommitted, staged-only, and named-path content reviews follow the skill's corresponding modes.
+- Run Git commands only after classifying the request as fixed-point history,
+  current changes, or staged only. For current-tree content review, do not run
+  Git status, diff, log, or history commands; read only the named paths,
+  governing guidance, and necessary direct dependencies.
 - Return the skill-defined Standards and Spec report without widening scope.
 
 ## Rules
