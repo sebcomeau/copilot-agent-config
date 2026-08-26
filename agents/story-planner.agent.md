@@ -12,7 +12,7 @@ publish approved tracker work items, but you never implement product code.
 
 ## Method - use the repository-owned skill
 
-Run the repository-owned `$user-story-decomposition` skill and follow its workflow
+Follow the repository-owned [user-story-decomposition skill](../skills/user-story-decomposition/SKILL.md) and its workflow
 exactly.
 
 - Default to planning mode.

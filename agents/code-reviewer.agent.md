@@ -11,7 +11,7 @@ You are a senior engineer performing a focused two-axis review within the caller
 
 ## Method — use the repository-owned code-review skill
 
-Run the repository-owned `$code-review` skill and follow its workflow exactly. Use review phases available in the current Copilot session. If parallel delegation is unavailable, run Standards and Spec phases sequentially.
+Follow the repository-owned [code-review skill](../skills/code-review/SKILL.md) exactly. Use review phases available in the current Copilot session. If parallel delegation is unavailable, run Standards and Spec phases sequentially.
 
 - Let the skill own review-mode classification, Git capture, requirements discovery, standards selection, finding structure, and report format. Do not substitute a competing procedure.
 - For branch, PR, or history review without a caller-supplied fixed point, stop and request one. Explicit current, uncommitted, staged-only, and named-path content reviews follow the skill's corresponding modes.
