@@ -14,35 +14,47 @@ Accept these optional caller inputs:
 - Fixed point: commit SHA, branch, tag, or merge-base.
 - Spec or requirements path: issue export, PRD, requirements document, or feature specification.
 - Standards path: repository coding standards or scoped instruction file.
-- Review scope: committed history, staged changes, uncommitted changes, or a named path.
+- Review scope: committed history, current changes, staged-only changes, or current-tree content at a named path.
 
 If the caller supplies no fixed point:
 
-- For a request explicitly about current uncommitted or staged changes, use `HEAD` as the baseline and review `git diff HEAD`.
+- For a request explicitly about current or uncommitted changes, use `HEAD` as the baseline for tracked changes.
+- For a staged-only request, use `HEAD` as the baseline and inspect only the index.
+- For a named-path review that does not request change history, perform a current-tree content review and label it as such. Do not invent a Git baseline.
 - For a branch, PR, or history review, ask for a commit SHA, branch, tag, or merge-base. Never guess.
 
 ## Phase 1: Establish review scope
 
 1. Identify repository root and read applicable `AGENTS.md`, `CONTRIBUTING.md`, `README.md`, scoped instructions, and relevant project guidance.
-2. If a fixed point was supplied, validate it with `git rev-parse <fixed-point>`.
-3. For fixed-point history review, capture exactly:
+2. Classify the request as exactly one review mode:
+   - **Fixed-point history:** changes from a caller-supplied commit, branch, tag, or merge-base to `HEAD`.
+   - **Current changes:** staged and unstaged tracked changes plus in-scope untracked files.
+   - **Staged only:** changes currently in the index.
+   - **Current-tree content:** named files as they exist now, without claiming to review a change set.
+3. For fixed-point history review, validate the reference with `git rev-parse <fixed-point>`, then capture:
 
    ```text
    git diff <fixed-point>...HEAD
    git log <fixed-point>..HEAD --oneline
    ```
 
-4. For current-change review, capture:
+4. For current-change review, capture tracked changes once and use status to identify in-scope untracked files:
 
    ```text
+   git status --short
    git diff HEAD
+   ```
+
+   `git diff HEAD` already combines staged and unstaged tracked changes. Read relevant untracked files directly; never treat ignored or unrelated files as part of the review.
+5. For staged-only review, capture:
+
+   ```text
    git diff --cached
    ```
 
-   Avoid double-counting staged changes when combining outputs.
-
-5. Stop and report a blocked review when the fixed point is invalid or the requested diff is empty.
-6. Record the exact paths and selectors in scope. Do not inspect unrelated files except governing guidance and direct dependencies needed to understand a finding.
+6. For current-tree content review, read only the named paths, governing guidance, and direct dependencies needed to assess them. State explicitly that no Git change set was reviewed.
+7. Stop and report a blocked review when a supplied fixed point is invalid or a diff-based mode has no in-scope changed content. An empty tracked diff is not empty scope when relevant untracked files are present.
+8. Record the review mode, exact paths, and selectors in scope. Do not inspect unrelated files except governing guidance and direct dependencies needed to understand a finding.
 
 ## Phase 2: Discover requirements
 

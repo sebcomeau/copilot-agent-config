@@ -9,8 +9,8 @@ User-level configuration for GitHub Copilot custom agents and subagent routing.
 - [`SUBAGENT_ROUTING.md`](SUBAGENT_ROUTING.md): project-aware discovery, delegation, ownership, handoff, and validation rules.
 - [`agents/`](agents/): custom agent definitions.
   - `code-explorer.agent.md`: read-only repository discovery and contract tracing.
-  - `code-reviewer.agent.md`: fixed-reference standards and specification review.
-  - `code-validator.agent.md`: focused read-only test, build, lint, and type-check execution.
+  - `code-reviewer.agent.md`: two-axis change and current-tree content review.
+  - `code-validator.agent.md`: focused read-only test, build, lint, type-check, parsing, and documentation validation.
   - `commit-pusher.agent.md`: explicit commit-and-push publishing workflow.
   - `implementer.agent.md`: multi-file implementation and unit-test work.
   - `quick-implementer.agent.md`: localized, low-risk changes.
@@ -18,6 +18,19 @@ User-level configuration for GitHub Copilot custom agents and subagent routing.
 - [`skills/`](skills/): repository-owned Agent Skills.
   - [`code-review`](skills/code-review/SKILL.md): Copilot-native two-axis Standards and Spec review.
   - [`user-story-decomposition`](skills/user-story-decomposition/SKILL.md): plan-first story refinement, implementation task decomposition, and approval-gated tracker publishing.
+
+## Configuration Ownership
+
+Each concern has one canonical owner to limit policy drift:
+
+- `AGENTS.md` is the short workspace entry point.
+- `CONTRIBUTING.md` owns shared contribution, validation, review, and Git safety practices.
+- `SUBAGENT_ROUTING.md` owns agent selection, orchestration, and delegated handoff requirements.
+- `agents/*.agent.md` owns each role's boundaries and report contract.
+- `skills/*/SKILL.md` owns detailed domain workflows.
+- `README.md` provides navigation and concise summaries.
+
+Secondary files should link to the canonical owner instead of repeating procedural mechanics. Critical safety invariants may remain repeated as defense in depth.
 
 ## Routing Principles
 
@@ -29,7 +42,7 @@ Agents should:
 4. Preserve unrelated user and agent changes in the shared workspace.
 5. Use focused validation for affected files or selectors.
 
-Behavioral verification is normally delegated to `code-validator` after implementation. `code-reviewer` requires a valid Git fixed point for branch or history reviews; current uncommitted or staged reviews use `HEAD`. `commit-pusher` requires an explicit request to both commit and push.
+Behavioral verification is normally delegated to `code-validator` after implementation. The `code-reviewer` modes are defined by the repository-owned [`code-review` skill](skills/code-review/SKILL.md): branch, PR, and history reviews require an explicit fixed point; explicitly requested current or staged reviews may use `HEAD`; named-path content reviews do not claim a Git change set. `commit-pusher` requires an explicit request to both commit and push.
 
 ## `code-review` Skill
 
