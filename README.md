@@ -54,7 +54,7 @@ The `story-planner` agent uses the repository-owned [`user-story-decomposition`]
 
 ## Git Tracking
 
-[`.gitignore`](.gitignore) uses a whitelist. It keeps this README, `.gitignore`, `AGENTS.md`, `SUBAGENT_ROUTING.md`, `agents/*.agent.md`, and `skills/*/SKILL.md` visible to Git while ignoring local settings, logs, caches, command history, and session state.
+[`.gitignore`](.gitignore) uses a whitelist. It keeps `.gitignore`, `AGENTS.md`, `CONTRIBUTING.md`, `README.md`, and `SUBAGENT_ROUTING.md`, plus all files and subdirectories under `agents/` and `skills/`, visible to Git. Everything outside that whitelist remains ignored, including root-level local settings, logs, caches, command history, and session state.
 
 ## Scope
 
