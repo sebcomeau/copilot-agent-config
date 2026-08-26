@@ -267,8 +267,9 @@ Read every created or reused task back from the tracker and verify:
 - Reciprocal successor relations on predecessors.
 - No duplicate children under the parent.
 
-Check the product repository working tree and confirm it remains unchanged unless the
-user separately requested repository edits.
+Report that this workflow made no intentional repository edits. Do not inspect Git state
+as publication validation; repository-state validation requires a separate, explicitly
+Git-scoped task.
 
 Report created task IDs and clickable URLs, dependency validation, any reused tasks,
 and unresolved external dependencies. Never claim a tracker write or validation that
@@ -287,5 +288,5 @@ did not complete.
   dependencies, and validation for every affected side explicit.
 - Do not treat provisional visual placement as more authoritative than an approved
   business rule.
-- Do not commit or push customization or product repository changes unless explicitly
-  requested.
+- Do not modify, commit, or push customization or product repository files as part of
+  this workflow.
