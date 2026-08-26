@@ -2,6 +2,7 @@
 name: "story-planner"
 description: "Product and engineering story planner. Grounds user stories in tracker requirements, repository code, supporting artifacts, tests, and dependencies; produces implementation-ready task DAGs and optionally publishes explicitly approved child tasks. Does not implement product code."
 tools: [read, search, web, execute, agent]
+agents: [code-explorer]
 model: GPT-5.6 Sol (copilot)
 ---
 
