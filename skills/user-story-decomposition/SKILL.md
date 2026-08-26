@@ -1,24 +1,23 @@
 ---
 name: user-story-decomposition
-description: "Refine and decompose user stories into implementation-ready child tasks grounded in tracker requirements, repository code, supporting artifacts, tests, and dependencies. Use for Azure DevOps or issue-tracker story decomposition, task planning, design or specification review including Figma, child task creation, Markdown task descriptions, or predecessor/successor links. Plan first and never mutate the tracker without explicit approval."
+description: "Refine and decompose user stories into implementation-ready child-task plans grounded in tracker requirements, repository code, supporting artifacts, tests, and dependencies. Use for Azure DevOps or issue-tracker story decomposition, task planning, design or specification review including Figma, Markdown task descriptions, dependency DAGs, or approval-ready publishing handoffs. This skill is plan-only and never mutates trackers."
 argument-hint: "Story ID or URL; optionally say plan only"
 ---
 
 # User Story Decomposition
 
 Refine a user story collaboratively, produce a dependency-aware implementation plan,
-and optionally publish approved child tasks. Do not implement product code as part of
-this workflow.
+and prepare an approval-ready handoff for the manually selected `story-publisher` agent.
+Do not implement product code or mutate tracker data as part of this workflow.
 
-## Operating Modes
+## Operating Mode
 
-- **Plan** is always the default. Inspect, interview, and draft without mutating the
-  issue tracker.
-- **Publish** is allowed only after the user explicitly approves the final task set and
-  asks to create or publish it.
+- **Plan only.** Inspect, interview, and draft without mutating the issue tracker.
 - Praise, discussion, agreement with one decision, or a request to keep refining is not
   publishing approval.
 - If the user changes scope after approval, revise the plan and obtain approval again.
+- Even after approval, return only the exact publishing handoff. Never create, update,
+  link, close, or delete tracker items.
 
 ## Inputs
 
@@ -28,7 +27,7 @@ Accept these optional inputs:
 - Tracker organization, project, repository, or team context.
 - Product specification, parent story, design links, or supporting documentation.
 - Desired task count, parallelism, ownership split, or exclusions.
-- A request to remain plan-only or to publish an already approved plan.
+- A request to prepare a publishing handoff for an approved plan.
 
 Before asking for tracker details, inspect repository guidance and any tracker
 configuration explicitly documented by the repository. Prefer a full story URL because
@@ -193,92 +192,35 @@ requires another format.
 
 ## Phase 6: Approval Gate
 
-Before publishing, show the user:
+Before producing `Publishing approval: yes`, show the user:
 
 - Parent story ID and title.
-- Exact task count, titles, and descriptions or an approved summary of them.
+- Exact task count, titles, and complete descriptions.
 - Tracker-specific classification and scheduling fields, and their inheritance behavior.
 - Description format.
 - Parent, predecessor, and successor links to be created.
 - Remaining blockers and external dependencies.
 
-State explicitly that no tracker mutations have occurred. Publish only after an
-unambiguous request such as "create the tasks" or "publish this approved plan."
+State explicitly that no tracker mutations have occurred. Treat an unambiguous request
+such as "create the tasks" or "publish this approved plan" as permission to prepare the
+handoff, not permission for this skill to mutate the tracker.
 
-## Phase 7: Publish to Azure DevOps
+The publishing handoff must contain:
 
-When Azure DevOps is the tracker, load available Azure DevOps tooling guidance before
-mutation and follow these safeguards:
+- `Publishing approval: yes` and the user's explicit publication request.
+- Parent story ID and tracker organization, project, and team context.
+- Exact approved task titles and complete descriptions.
+- Approved tracker-specific classification and scheduling behavior.
+- Approved parent relations and dependency DAG.
 
-1. Re-read the parent and its children immediately before creation.
-2. Inherit Area and Iteration exactly from the parent unless the user approved an
-   override.
-3. Detect duplicates by parent plus normalized task title. Reuse verified existing tasks
-   rather than creating copies.
-4. Create each child as a `Task` with its description and Markdown format in the same
-   JSON Patch request.
-5. Add the parent relation using `System.LinkTypes.Hierarchy-Reverse`.
-6. Create tasks that supply internal dependencies before their successors.
-7. Add a `Predecessor` relation to each successor. Verify that Azure DevOps exposes the
-   reciprocal `Successor` relation on the predecessor.
-8. Use operating-system temporary files for long JSON request bodies and remove them
-   afterward. Do not create publishing artifacts in the product repository.
-9. Never print authentication material or place secrets in command arguments, files, or
-   task descriptions.
-
-For Markdown work item creation, the JSON Patch must include both operations in the
-initial request:
-
-```json
-{
-  "op": "add",
-  "path": "/fields/System.Description",
-  "value": "## Summary\n..."
-},
-{
-  "op": "add",
-  "path": "/multilineFieldsFormat/System.Description",
-  "value": "Markdown"
-}
-```
-
-Use the Work Item REST resource through `az devops invoke` with media type
-`application/json-patch+json` when descriptions are long or Markdown formatting is
-required. Do not rely on `az boards work-item create --description` for this workflow.
-
-On Windows, avoid passing long bodies through `az.cmd`. Prefer `--in-file` with
-`az devops invoke`; resolve the installed CLI normally rather than hard-coding a local
-installation path.
-
-If publishing fails partway through, stop, re-read the parent and children, report what
-was created, and resume idempotently only after the current state is known. Never delete
-or recreate successful tasks merely to simplify recovery.
-
-## Phase 8: Validate Published Work
-
-Read every created or reused task back from the tracker and verify:
-
-- Work item type and exact title.
-- Parent relation.
-- Inherited Area and Iteration.
-- Markdown description format.
-- Required description sections and direct design links.
-- Internal and cross-story predecessor relations.
-- Reciprocal successor relations on predecessors.
-- No duplicate children under the parent.
-
-Report that this workflow made no intentional repository edits. Do not inspect Git state
-as publication validation; repository-state validation requires a separate, explicitly
-Git-scoped task.
-
-Report created task IDs and clickable URLs, dependency validation, any reused tasks,
-and unresolved external dependencies. Never claim a tracker write or validation that
-did not complete.
+Tracker mutation belongs only to the manually selected `story-publisher` agent. Do not
+load or execute any publisher workflow from this skill.
 
 ## Boundaries
 
 - Do not implement product code while decomposing a story.
-- Do not create, update, link, close, or delete work items without explicit approval.
+- Never create, update, link, close, or delete work items. Explicit approval authorizes
+  only an exact handoff to the manually selected publisher.
 - Do not invent requirements to make the task plan appear complete.
 - Backend, frontend, infrastructure, audit, E2E, shared-workflow, and cross-team stories
   are all valid. Include every surface directly required by the story, its acceptance

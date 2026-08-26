@@ -61,7 +61,7 @@ Select custom agents by their exact `name` from `~/.copilot/agents`:
 
 ### Delegated Handoff
 
-For a user-initiated handoff from `story-planner` to `story-publisher`, include `Publishing approval: yes`, the parent story and tracker context, the exact approved task set, tracker-specific field inheritance, and the approved dependency DAG. Without all of these, `story-publisher` must stop without tracker mutation. The parent agent must never invoke `story-publisher` as a subagent.
+For a user-initiated handoff from `story-planner` to `story-publisher`, include `Publishing approval: yes`, the parent story and tracker context, exact approved task titles and complete descriptions, tracker-specific field inheritance, and the approved dependency DAG. Without all of these, `story-publisher` must stop without tracker mutation. The parent agent must never invoke `story-publisher` as a subagent.
 
 All delegated agents share the workspace. Preserve unrelated user and agent changes, and do not assume exclusive ownership outside the assigned paths.
 

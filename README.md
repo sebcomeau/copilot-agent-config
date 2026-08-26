@@ -18,7 +18,7 @@ User-level configuration for GitHub Copilot custom agents and subagent routing.
   - `story-publisher.agent.md`: manual-only publication of explicitly approved tracker tasks.
 - [`skills/`](skills/): repository-owned Agent Skills.
   - [`code-review`](skills/code-review/SKILL.md): Copilot-native two-axis Standards and Spec review.
-  - [`user-story-decomposition`](skills/user-story-decomposition/SKILL.md): plan-first story refinement, implementation task decomposition, and approval-gated tracker publishing.
+  - [`user-story-decomposition`](skills/user-story-decomposition/SKILL.md): plan-only story refinement, implementation task decomposition, and exact approval-ready publishing handoffs.
 
 ## Configuration Ownership
 
@@ -51,7 +51,7 @@ The `code-reviewer` agent uses the repository-owned skill at [`skills/code-revie
 
 ## Story Planning and Publishing
 
-The `story-planner` agent uses planning phases of the repository-owned [`user-story-decomposition`](skills/user-story-decomposition/SKILL.md) skill to ground tracker stories in repository and supporting-artifact evidence and build dependency-aware task plans. It has no terminal tool and never mutates tracker data. After explicit approval, the user may manually select `story-publisher`, which publishes only the exact approved task set and performs read-back validation. Model-driven invocation of `story-publisher` is disabled.
+The `story-planner` agent uses the plan-only repository-owned [`user-story-decomposition`](skills/user-story-decomposition/SKILL.md) skill to ground tracker stories in repository and supporting-artifact evidence and build dependency-aware task plans. It has no terminal tool and never mutates tracker data. After approving exact titles, complete descriptions, fields, and dependencies, the user may manually select `story-publisher`, which follows its separate publisher-only workflow, publishes only the exact approved task set, and performs read-back validation. Model-driven invocation of `story-publisher` is disabled.
 
 ## Git Tracking
 

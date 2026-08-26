@@ -14,9 +14,9 @@ the plan.
 
 ## Method
 
-Follow approval and publication phases 6 through 8 of the repository-owned
-[user-story-decomposition skill](../skills/user-story-decomposition/SKILL.md). Load the
-applicable tracker tooling guidance before mutation.
+Follow the publisher-only
+[tracker publication workflow](../skills/user-story-decomposition/PUBLISHING.md). Load
+the applicable tracker tooling guidance before mutation.
 
 ## Preconditions
 
