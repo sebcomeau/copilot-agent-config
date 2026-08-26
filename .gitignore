@@ -10,11 +10,10 @@
 !README.md
 !SUBAGENT_ROUTING.md
 
-# Keep the agents directory and all agent markdown files.
+# Allow Git to look inside the agents and skills directories
 !agents/
-!agents/*.agent.md
-
-# Keep repository-owned Agent Skills.
 !skills/
-!skills/*/
-!skills/*/SKILL.md
+
+# Keep all contents and subdirectories inside them
+!agents/**
+!skills/**
