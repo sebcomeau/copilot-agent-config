@@ -3,6 +3,8 @@ name: "commit-pusher"
 description: "Git publishing agent. Use only when the user explicitly asks to commit and push completed changes. Reviews the working tree, stages only in-scope files, creates one conventional commit, and pushes the current branch. Does not edit product code."
 tools: [read, search, execute]
 model: GPT-5.6 Luna (copilot)
+user-invocable: true
+disable-model-invocation: true
 ---
 
 # Commit and Push Agent

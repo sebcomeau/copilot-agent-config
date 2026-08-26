@@ -18,13 +18,13 @@ Established project configuration, stack, instructions, and guidelines are sourc
 - Resolve instruction conflicts by specificity: target-path guidance, nearest project guidance, repository guidance, then these rules. Escalate true contradictions.
 - Include the discovered stack, governing guidance, owned paths, and validation commands in the delegated handoff below.
 
-Optimize monetary cost above latency. Delegate when work requires multi-file discovery, behavior changes, diagnosis, tests, review, validation, or publishing; handle directly only a known-line mechanical edit, one short command, or a factual response. Use `quick-implementer` for localized one- or two-file changes that need implementation or a focused check.
+Optimize monetary cost above latency. Delegate when work requires multi-file discovery, behavior changes, diagnosis, tests, review, or validation; handle directly only a known-line mechanical edit, one short command, or a factual response. Tracker and Git publication are never delegated: they require direct user selection of the manual-only publishing agent. Use `quick-implementer` for localized one- or two-file changes that need implementation or a focused check.
 
 At task start, delegate qualifying workstreams or record why delegation is not worthwhile. Reassess after major checkpoints. Delegate bounded workstreams with explicit, non-overlapping ownership.
 
 Git inspection is capability-triggered, not routine preflight:
 
-- `quick-implementer`, `implementer`, `code-explorer`, `code-validator`, and `story-planner` do not inspect Git state unless the delegated task explicitly requires Git metadata.
+- `quick-implementer`, `implementer`, `code-explorer`, `code-validator`, `story-planner`, and `story-publisher` do not inspect Git state unless the delegated task explicitly requires Git metadata. `story-publisher` must not inspect Git state as part of tracker publication.
 - `code-reviewer` inspects Git only for an explicitly selected diff-based review mode. A named-path content review must not inspect Git state.
 - `commit-pusher` may inspect status, branches, and scoped diffs because Git publication is its assigned responsibility.
 
@@ -46,21 +46,22 @@ When delegation is justified:
 - When every affected unit-test manifest entry passes, do not rerun the global unit-test suite by default. Treat integration and end-to-end validation as separate scopes only when explicitly required by the task or a later routing policy. The parent classifies validator failures before requesting repairs. For likely implementation failures, re-invoke `implementer` with the original handoff, validator evidence, same file ownership, and affected validation scope; then send the affected checks back to a validator. Prefer no more than two repair cycles before escalating unresolved, flaky, environmental, or contract-level failures.
 - For a truly trivial change with one fast and obvious check, `quick-implementer` may validate directly instead of spawning a validator.
 - Use `code-reviewer` for a branch, PR, or history review only when the caller supplies a valid fixed Git reference. An explicit current, uncommitted, or staged review may use `HEAD` according to the repository-owned `code-review` skill. A named-path request may be reviewed as current-tree content when it is labelled as a content review rather than a Git change review. Never infer a fixed point for branch, PR, or history review.
-- Use `commit-pusher` only when caller explicitly requests both commit and push. It must verify branch, upstream, status, and scoped diff before staging anything.
+- Never invoke `commit-pusher` as a subagent. After the caller explicitly requests both commit and push, require direct user selection of `commit-pusher`; it must verify branch, upstream, status, and scoped diff before staging anything.
 
 Select custom agents by their exact `name` from `~/.copilot/agents`:
 
-- User-story refinement, repository and supporting-artifact grounding, task DAG planning, or approval-gated tracker publishing -> `story-planner`
+- User-story refinement, repository and supporting-artifact grounding, or task DAG planning -> `story-planner`
+- Explicitly approved tracker task publication, selected directly by the user -> `story-publisher`
 - Broad repository discovery, contract or data-flow tracing -> `code-explorer`
 - Mechanical one- or two-file change -> `quick-implementer`
 - Multi-file behavior change, debugging, or substantial tests -> `implementer`
 - Focused read-only test, build, lint, type-check, parsing, or documentation-check execution -> `code-validator`
 - Independent review only for high-risk, security-sensitive, architectural, public-API, migration, concurrency, or difficult-to-validate changes -> `code-reviewer`
-- Commit and push, only when the user explicitly requests both -> `commit-pusher`
+- Commit and push, selected directly by the user only after explicitly requesting both -> `commit-pusher`
 
 ### Delegated Handoff
 
-For a `story-planner` publishing handoff, include `Publishing approval: yes`, the parent story and tracker context, the exact approved task set, tracker-specific field inheritance, and the approved dependency DAG. Without all of these, `story-planner` remains in read-only planning mode.
+For a user-initiated handoff from `story-planner` to `story-publisher`, include `Publishing approval: yes`, the parent story and tracker context, the exact approved task set, tracker-specific field inheritance, and the approved dependency DAG. Without all of these, `story-publisher` must stop without tracker mutation. The parent agent must never invoke `story-publisher` as a subagent.
 
 All delegated agents share the workspace. Preserve unrelated user and agent changes, and do not assume exclusive ownership outside the assigned paths.
 

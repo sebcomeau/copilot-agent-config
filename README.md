@@ -14,7 +14,8 @@ User-level configuration for GitHub Copilot custom agents and subagent routing.
   - `commit-pusher.agent.md`: explicit commit-and-push publishing workflow.
   - `implementer.agent.md`: multi-file implementation and unit-test work.
   - `quick-implementer.agent.md`: localized, low-risk changes.
-  - `story-planner.agent.md`: evidence-based user-story refinement and approval-gated task publishing.
+  - `story-planner.agent.md`: plan-only, evidence-based user-story refinement and task decomposition.
+  - `story-publisher.agent.md`: manual-only publication of explicitly approved tracker tasks.
 - [`skills/`](skills/): repository-owned Agent Skills.
   - [`code-review`](skills/code-review/SKILL.md): Copilot-native two-axis Standards and Spec review.
   - [`user-story-decomposition`](skills/user-story-decomposition/SKILL.md): plan-first story refinement, implementation task decomposition, and approval-gated tracker publishing.
@@ -42,15 +43,15 @@ Agents should:
 4. Preserve unrelated user and agent changes in the shared workspace.
 5. Use focused validation for affected files or selectors.
 
-Behavioral verification is normally delegated to `code-validator` after implementation. The `code-reviewer` modes are defined by the repository-owned [`code-review` skill](skills/code-review/SKILL.md): branch, PR, and history reviews require an explicit fixed point; explicitly requested current or staged reviews may use `HEAD`; named-path content reviews do not claim a Git change set. `commit-pusher` requires an explicit request to both commit and push.
+Behavioral verification is normally delegated to `code-validator` after implementation. The `code-reviewer` modes are defined by the repository-owned [`code-review` skill](skills/code-review/SKILL.md): branch, PR, and history reviews require an explicit fixed point; explicitly requested current or staged reviews may use `HEAD`; named-path content reviews do not claim a Git change set. Tracker and Git publication use the manually selected `story-publisher` and `commit-pusher` agents; both disable model invocation and require explicit user authorization.
 
 ## `code-review` Skill
 
 The `code-reviewer` agent uses the repository-owned skill at [`skills/code-review/SKILL.md`](skills/code-review/SKILL.md). Because this repository is the user-level `.copilot` directory, the skill is available globally across projects when this folder is used as `~/.copilot`.
 
-## `story-planner` Agent and `user-story-decomposition` Skill
+## Story Planning and Publishing
 
-The `story-planner` agent uses the repository-owned [`user-story-decomposition`](skills/user-story-decomposition/SKILL.md) skill to ground tracker stories in repository and supporting-artifact evidence, build dependency-aware task plans, and publish approved child tasks with read-back validation. Planning is the default; tracker mutation requires explicit user approval.
+The `story-planner` agent uses planning phases of the repository-owned [`user-story-decomposition`](skills/user-story-decomposition/SKILL.md) skill to ground tracker stories in repository and supporting-artifact evidence and build dependency-aware task plans. It has no terminal tool and never mutates tracker data. After explicit approval, the user may manually select `story-publisher`, which publishes only the exact approved task set and performs read-back validation. Model-driven invocation of `story-publisher` is disabled.
 
 ## Git Tracking
 
