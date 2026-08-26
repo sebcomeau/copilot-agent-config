@@ -1,6 +1,7 @@
 ---
 name: "code-validator"
 description: "Read-only verification runner. Executes focused, assigned tests, builds, lint, type-checks, parsing checks, or documentation checks after implementation and returns reproducible evidence. Never edits code or fixes failures."
+tools: [read, search, execute]
 model: GPT-5.4 mini (copilot)
 reasoning_effort: low
 ---

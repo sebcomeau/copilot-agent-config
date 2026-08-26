@@ -1,6 +1,7 @@
 ---
 name: "implementer"
 description: "Implements features and bug fixes with accompanying unit tests. Runs only cheap structural checks, then hands behavioral verification to a separate code-validator. Remains available for focused repair follow-ups."
+tools: [read, search, edit, execute]
 model: GPT-5.6 Luna (copilot)
 reasoning_effort: medium
 ---
