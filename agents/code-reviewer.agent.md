@@ -3,7 +3,6 @@ name: "code-reviewer"
 description: "Senior code reviewer. Use when reviewing committed, staged, or uncommitted changes or named-path current-tree content against repository standards and intended requirements. Runs separate Standards and Spec review. Review-only — reports findings and does not implement fixes."
 tools: [read, search, execute]
 model: GPT-5.6 Sol (copilot)
-reasoning_effort: medium
 ---
 
 # Code Reviewer

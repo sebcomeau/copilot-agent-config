@@ -3,7 +3,6 @@ name: "code-explorer"
 description: "Read-only codebase scout. Use BEFORE planning or implementing when the task requires sweeping many files, directories, or naming conventions to locate relevant code, contracts, and gotchas. Returns a condensed structured report — never raw file dumps. Does not modify code."
 tools: [read, search]
 model: GPT-5.6 Luna (copilot)
-reasoning_effort: "low"
 ---
 
 # Code Explorer (Read-Only Scout)

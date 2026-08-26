@@ -3,7 +3,6 @@ name: "quick-implementer"
 description: "Low-cost agent for small, mechanical, well-specified changes in one or two files. Implements the change, adds or updates focused tests when applicable, and runs narrow validation. Escalates ambiguous or architectural work instead of guessing."
 tools: [read, search, edit, execute]
 model: GPT-5.6 Luna (copilot)
-reasoning_effort: low
 ---
 
 # Quick Implementer
