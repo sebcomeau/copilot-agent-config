@@ -14,8 +14,10 @@ User-level configuration for GitHub Copilot custom agents and subagent routing.
   - `commit-pusher.agent.md`: explicit commit-and-push publishing workflow.
   - `implementer.agent.md`: multi-file implementation and unit-test work.
   - `quick-implementer.agent.md`: localized, low-risk changes.
+  - `story-planner.agent.md`: evidence-based user-story refinement and approval-gated task publishing.
 - [`skills/`](skills/): repository-owned Agent Skills.
   - [`code-review`](skills/code-review/SKILL.md): Copilot-native two-axis Standards and Spec review.
+  - [`user-story-decomposition`](skills/user-story-decomposition/SKILL.md): plan-first story refinement, implementation task decomposition, and approval-gated tracker publishing.
 
 ## Routing Principles
 
@@ -32,6 +34,10 @@ Behavioral verification is normally delegated to `code-validator` after implemen
 ## `code-review` Skill
 
 The `code-reviewer` agent uses the repository-owned skill at [`skills/code-review/SKILL.md`](skills/code-review/SKILL.md). Because this repository is the user-level `.copilot` directory, the skill is available globally across projects when this folder is used as `~/.copilot`.
+
+## `story-planner` Agent and `user-story-decomposition` Skill
+
+The `story-planner` agent uses the repository-owned [`user-story-decomposition`](skills/user-story-decomposition/SKILL.md) skill to ground tracker stories in repository and supporting-artifact evidence, build dependency-aware task plans, and publish approved child tasks with read-back validation. Planning is the default; tracker mutation requires explicit user approval.
 
 ## Git Tracking
 

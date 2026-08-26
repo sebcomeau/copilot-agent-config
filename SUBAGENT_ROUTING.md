@@ -42,6 +42,7 @@ When delegation is justified:
 
 Select custom agents by their exact `name` from `~/.copilot/agents`:
 
+- User-story refinement, repository and supporting-artifact grounding, task DAG planning, or approval-gated tracker publishing -> `story-planner`
 - Broad repository discovery, contract or data-flow tracing -> `code-explorer`
 - Mechanical one- or two-file change -> `quick-implementer`
 - Multi-file behavior change, debugging, or substantial tests -> `implementer`
@@ -50,6 +51,8 @@ Select custom agents by their exact `name` from `~/.copilot/agents`:
 - Commit and push, only when the user explicitly requests both -> `commit-pusher`
 
 ### Delegated Handoff
+
+For a `story-planner` publishing handoff, include `Publishing approval: yes`, the parent story and tracker context, the exact approved task set, tracker-specific field inheritance, and the approved dependency DAG. Without all of these, `story-planner` remains in read-only planning mode.
 
 All delegated agents share the workspace. Preserve unrelated user and agent changes, and do not assume exclusive ownership outside the assigned paths.
 
