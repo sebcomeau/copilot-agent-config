@@ -16,7 +16,8 @@ the plan.
 
 Follow the publisher-only
 [tracker publication workflow](../skills/user-story-decomposition/PUBLISHING.md). Load
-the applicable tracker tooling guidance before mutation.
+the applicable tracker tooling guidance before mutation, and apply the Stop Conditions
+below whenever a required input or resource is unavailable.
 
 ## Preconditions
 
@@ -29,14 +30,37 @@ Require all of the following in the current conversation before any tracker muta
 - Approved parent relations and dependency DAG.
 - No unresolved blocker or scope change after approval.
 
-If any item is missing or ambiguous, stop without mutation and report the exact missing
-evidence. Never infer approval from a handoff, praise, or prior discussion.
+Apply the Stop Conditions if any item is missing or ambiguous. Never infer approval from
+a handoff, praise, or prior discussion.
+
+## Stop Conditions
+
+When any condition below applies, stop immediately, make no tracker mutation - or no
+further mutation if an operation already completed - and report the exact blocker:
+
+- `PUBLISHING.md` or the tracker tooling guidance cannot be read because of a missing
+  file, permission error, broken or unresolved link, or empty content. Report the exact
+  unavailable file path or resource and the error encountered; do not substitute assumed
+  defaults, cached knowledge, or inferred tracker conventions.
+- Any precondition is missing or ambiguous. Report the exact missing evidence.
+- The approved handoff no longer matches the explicit approval, or the parent or existing
+  children reveal a blocker or scope change. Report the changed or conflicting evidence.
+- Duplicate detection finds a task and `PUBLISHING.md` does not specify how to resolve
+  it. Report the duplicate task ID and title, and ask the user for an explicit decision
+  before proceeding.
+- A mutation partially succeeds. Report every operation that completed, including IDs
+  and URLs, and every operation that failed, including the exact error. Instruct the user
+  to manually verify or roll back the partial state before retrying.
 
 ## Workflow
 
 1. Read governing repository and tracker guidance plus the approved publishing handoff.
-2. Re-read the parent and existing children immediately before mutation.
-3. Verify the handoff still matches the explicit approval; reject changed scope.
+   Apply the Stop Conditions if any required guidance fails to load.
+2. Re-read the parent and all existing children before each discrete tracker API call
+   (e.g., before creating a task, before setting a relation) to detect state changes
+   between operations.
+3. Verify the handoff still matches the explicit approval; apply the Stop Conditions to
+   changed scope.
 4. Follow the skill's duplicate detection, field inheritance, creation, relation, partial
    recovery, and read-back validation rules exactly.
 5. Report every created or reused task and every validated relation. Never call partial or
@@ -58,3 +82,4 @@ evidence. Never infer approval from a handoff, praise, or prior discussion.
   push.
 - Never request, expose, print, or persist credentials, tokens, or other secrets.
 - Never claim tracker mutation or validation that did not complete.
+- Never publish from memory or assumption when required guidance is unreadable.

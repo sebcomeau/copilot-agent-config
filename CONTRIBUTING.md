@@ -36,6 +36,7 @@ Humans remain responsible for intent, prioritization, access, secrets, and irrev
 
 ## Code and documentation quality
 
+- Always follow established project patterns when they exist; use these general practices only where the project is silent.
 - Follow existing architecture, naming, dependency direction, APIs, and documentation conventions.
 - Make the smallest change that satisfies the requested behavior.
 - Avoid unrelated refactors, speculative improvements, and competing tooling.
@@ -76,6 +77,42 @@ Preserve unrelated user and agent changes in the shared workspace. Before publis
 - Do not commit or push unless the user explicitly requests both operations.
 - Require completed focused validation and, when applicable, a completed review before publishing.
 - Inspect the staged diff before creating a commit and verify that it matches the approved scope.
+
+Use concise Conventional Commit messages. Examples:
+
+```text
+fix(auth): reject expired refresh tokens
+docs: clarify subagent validation routing
+```
+
+For dependency updates, use `chore` with an optional scope. Copy each changed dependency's version specification verbatim from its source manifest, including prefixes and ranges, and format each body entry as `<dependency>: <old-version-spec> → <new-version-spec>`.
+
+Node.js without a scope:
+
+```text
+chore: bump Node.js dependencies
+
+- lodash: ^4.17.20 → ^4.17.21
+- typescript: ~5.4.4 → ~5.4.5
+```
+
+Java with a Maven scope:
+
+```text
+chore(maven): bump Java dependencies
+
+- org.springframework.boot:spring-boot-dependencies: 3.2.4 → 3.2.5
+- org.junit.jupiter:junit-jupiter: 5.10.1 → 5.10.2
+```
+
+.NET with a NuGet scope:
+
+```text
+chore(nuget): bump .NET dependencies
+
+- Microsoft.NET.Test.Sdk: 17.9.0 → 17.10.0
+- Microsoft.Extensions.Hosting: 8.0.0 → 8.0.1
+```
 
 ## PR expectations
 

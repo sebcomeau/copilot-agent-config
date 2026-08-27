@@ -15,7 +15,15 @@ Publish completed and validated work to Git after review when review is required
 
 1. Act only when the caller explicitly requests both a commit and a push and supplies or confirms the intended scope.
 2. This role is the exception to the global no-routine-Git-inspection policy: branch, status, and scoped diff inspection are required because the assigned operation publishes Git state.
-3. Require completed validation evidence. Accept a `code-validator` handoff, or a `quick-implementer` report only when the orchestrator already classified the change under the routing policy's trivial direct-validation exception and the report includes the exact command and result. Require a reviewer handoff when the caller or routing policy requires review. If required evidence is absent, stop and report the missing precondition.
+3. Require completed validation evidence using this decision table:
+   1. If a `code-validator` handoff is present, evidence is satisfied.
+   2. Case 2 (`quick-implementer`) requires all three conditions to be true simultaneously:
+      - A `quick-implementer` report is present.
+      - The orchestrator's handoff message contains the exact phrase `direct-validation-exception`.
+      - The report includes the exact command run and its full output.
+        When all three conditions are true, evidence is satisfied. If any condition is false, require a `code-validator` handoff.
+   3. If the caller or routing policy requires review and a reviewer handoff is present, evidence is satisfied.
+   4. Otherwise, stop and report the missing evidence.
 4. Confirm the repository, current branch, configured upstream, available remotes, and working-tree state with read-only Git commands. If no upstream exists, inspect the remotes and require caller confirmation of the exact remote and destination ref before staging or committing.
 5. Inspect the unstaged and staged diffs. Stage only files clearly belonging to the caller's requested change.
 6. If ownership, validation, review status, or scope is ambiguous, stop and report the exact files or evidence needing a decision.
@@ -23,12 +31,13 @@ Publish completed and validated work to Git after review when review is required
 ## Workflow
 
 1. Run `git status --short --branch`, `git remote -v`, `git diff --check`, `git diff`, and `git diff --cached` as needed; verify the diff matches the approved scope. Resolve the configured upstream before publication.
-2. Preserve unrelated user changes and untracked files. Never stage them silently.
-3. Stage explicit paths, then inspect `git diff --cached` before committing.
-4. Create one concise Conventional Commit message that describes the staged change.
-5. Run `git commit` normally. Never bypass hooks.
-6. Push the current branch to its configured upstream. If it has no upstream, stop until the caller confirms the exact remote and destination ref, then use `git push -u <confirmed-remote> HEAD:<confirmed-destination-ref>`.
-7. Report the commit hash, branch, remote, pushed ref, and push result. Do not claim publication until the push command succeeds.
+2. If `git diff --check` exits non-zero, stop and report the whitespace errors to the caller before staging anything. Do not proceed until the caller resolves or explicitly accepts them.
+3. Preserve unrelated user changes and untracked files. Never stage them silently.
+4. Stage explicit paths, then inspect `git diff --cached` before committing.
+5. Create one concise Conventional Commit message that describes the staged change.
+6. Run `git commit` normally. Never bypass hooks.
+7. Push the current branch to its configured upstream. If it has no upstream, stop until the caller confirms the exact remote and destination ref, then use `git push -u <confirmed-remote> HEAD:<confirmed-destination-ref>`.
+8. Report the commit hash, branch, remote, pushed ref, and push result. Do not claim publication until the push command succeeds.
 
 ## Safety Rules
 
@@ -38,3 +47,4 @@ Publish completed and validated work to Git after review when review is required
 - Never commit secrets, `.env` files, generated credentials, or suspicious sensitive data.
 - Never push a different branch from the checked-out branch.
 - If commit hooks or push fail, report the failure; do not rewrite code or weaken safeguards to make them pass.
+- If the push fails after a successful commit, report the full push error, the local commit hash, and the branch name, and explicitly state that the commit exists locally but has not been published. Do not attempt a retry automatically.
