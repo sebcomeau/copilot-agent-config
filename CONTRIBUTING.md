@@ -127,10 +127,9 @@ The pull request should briefly explain:
 
 ## Local guidance
 
-When working in this workspace, use these files for concrete routing, agent behavior, and reusable workflows:
+When working in this workspace, use these files:
 
 - [`AGENTS.md`](AGENTS.md)
-- [`SUBAGENT_ROUTING.md`](SUBAGENT_ROUTING.md)
 - [`README.md`](README.md)
 - [`agents/`](agents/)
 - [`skills/`](skills/)

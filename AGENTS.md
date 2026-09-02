@@ -16,8 +16,4 @@ For named-file review, implementation, exploration, planning, and validation, us
 
 Before making changes, read [CONTRIBUTING.md](CONTRIBUTING.md) for shared contribution, validation, review, and Git practices.
 
-If CONTRIBUTING.md or SUBAGENT_ROUTING.md cannot be read, notify the caller and pause until the file is available or the caller provides explicit guidance.
-
-## Subagent routing
-
-Before delegating work to subagents, consult [SUBAGENT_ROUTING.md](SUBAGENT_ROUTING.md) and follow its guidance for when and how to delegate, which agent to select, and how to scope each task.
+If CONTRIBUTING.md cannot be read, notify the caller and pause until the file is available or the caller provides explicit guidance.

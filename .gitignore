@@ -8,7 +8,6 @@
 !AGENTS.md
 !CONTRIBUTING.md
 !README.md
-!SUBAGENT_ROUTING.md
 
 # Allow Git to look inside the agents and skills directories
 !agents/
