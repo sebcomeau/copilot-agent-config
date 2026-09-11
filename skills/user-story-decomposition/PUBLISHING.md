@@ -61,6 +61,11 @@ If any preflight check fails, report the exact mismatch and stop without mutatio
 preflight after an interruption, uncertain result, detected work-item revision change, or
 approved plan revision change.
 
+The bundled `scripts/publish-azure-devops.mjs` currently supports `validate` and `dry-run`
+only. It consumes organization, project, team, and target story from the approved handoff
+and state file; it never discovers or hardcodes tracker context and never mutates Azure
+DevOps. Live `publish` and `resume` modes require a separately validated CLI adapter.
+
 ## 3. Apply Metadata
 
 Apply only fields present in the approved metadata map:

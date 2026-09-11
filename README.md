@@ -22,6 +22,7 @@ The planner cannot invoke the publisher automatically. Any changed scope, task c
 - [`skills/user-story-decomposition/PUBLISHING.md`](skills/user-story-decomposition/PUBLISHING.md): publisher-only transport, preflight, mutation, recovery, and read-back workflow.
 - [`skills/user-story-decomposition/references/handoff.schema.json`](skills/user-story-decomposition/references/handoff.schema.json): machine-readable handoff contract.
 - [`skills/user-story-decomposition/scripts/validate-handoff.mjs`](skills/user-story-decomposition/scripts/validate-handoff.mjs): dependency-free Node.js structural validator.
+- [`skills/user-story-decomposition/scripts/publish-azure-devops.mjs`](skills/user-story-decomposition/scripts/publish-azure-devops.mjs): CLI-independent reconciliation and dry-run planner; consumes tracker context from the handoff.
 - [`skills/user-story-decomposition/evals/evals.json`](skills/user-story-decomposition/evals/evals.json): behavioral scenarios covering planning boundaries, evidence gaps, metadata, approval, transport errors, and recovery.
 - [`evals/user-story-decomposition/eval.yaml`](evals/user-story-decomposition/eval.yaml): local trigger and anti-trigger evaluation configuration.
 
@@ -35,6 +36,7 @@ Generated benchmark runs and snapshots live under `skills/user-story-decompositi
 - Publication chooses transport by capability and never switches transport to bypass a tracker rejection.
 - Existing children are classified as reuse, create, repair, or conflict to prevent duplicate work items.
 - Credentials are never requested, printed, or persisted.
+- The publisher dry-run script never discovers or hardcodes organization, project, team, or story context.
 
 ## Configuration Ownership
 
