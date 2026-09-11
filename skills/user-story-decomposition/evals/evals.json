@@ -1,0 +1,121 @@
+{
+  "skill_name": "user-story-decomposition",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Plan a small frontend story for adding a dismissible maintenance banner to an existing authenticated dashboard. The story says to reuse the current alert component and support English and French. Repository evidence shows the alert component has no persistence behavior. Produce the planning response only; do not publish or edit code.",
+      "expected_output": "A bounded plan that distinguishes existing presentation reuse from new dismissal-state ownership, asks only material unanswered questions, includes focused verification, and does not invent backend persistence.",
+      "expectations": [
+        "The response separates reuse of the alert presentation from ownership of new dismissal state.",
+        "The response asks a grouped material question about dismissal scope, lifetime, or persistence without inventing a backend API.",
+        "The response includes English and French behavior in provisional scope or acceptance criteria.",
+        "The response includes focused verification for localization and the conditional dismissal lifecycle.",
+        "The response records a clearly labeled provisional implementation boundary despite the unresolved persistence behavior.",
+        "The response does not emit publishing approval while persistence behavior remains unresolved."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Decompose backend story 91002. Acceptance criteria request PUT /customers/{id}, but the repository OpenAPI contract and controller expose PATCH /customers/{id} with If-Match and JSON Merge Patch. A linked design note still says PUT. Explain what must be resolved before tasks are approval-ready, then provide tasks only if evidence permits.",
+      "expected_output": "The planner reconciles tracker, design, OpenAPI, and implementation evidence; treats the contract conflict as material; preserves concurrency semantics; and blocks approval rather than silently choosing PUT or PATCH.",
+      "expectations": [
+        "The response identifies the PUT versus PATCH conflict across tracker/design and OpenAPI/controller evidence.",
+        "The response preserves If-Match and JSON Merge Patch as existing contract evidence rather than silently replacing them.",
+        "The response requests an authoritative contract decision and records the conflict as a blocker.",
+        "The response records provisional contract-resolution options or a reconciliation sequence without turning them into final implementation tasks.",
+        "The response does not produce an approval-ready handoff while the contract conflict is unresolved."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Plan a cross-stack story that adds a backend eligibility field, regenerates a TypeScript API client, and displays it in a React route. The repository requires Java contract changes before generated Node client updates. Repository commands are `mvn -pl apps/java/api test`, `pnpm --filter api-client generate`, and `pnpm --filter portal test`. Build an implementation-ready task DAG with exact ownership boundaries and verification commands, but keep planning tracker-neutral.",
+      "expected_output": "A stable-key acyclic DAG ordered contract/backend, generated client, then UI integration; no deep imports or hand-edited generated files; every task contains concrete verification and explicit cross-stack boundaries.",
+      "expectations": [
+        "The response uses stable task keys and an acyclic order from Java contract/backend to generated client to React UI.",
+        "The response keeps backend, generated-client, and UI ownership boundaries distinct.",
+        "The response regenerates rather than hand-edits the TypeScript client.",
+        "The task Verification sections include the three repository commands supplied in the prompt."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "A user story references a required Figma node and approved bilingual copy, but neither is accessible. Repository code confirms the route location but not layout or wording. Continue story planning as far as safely possible and show the next user interaction.",
+      "expected_output": "The planner records accessible evidence, identifies exactly which decisions the missing artifacts block, requests safe access without credentials, and does not fabricate design or copy or produce an approval-ready handoff.",
+      "expectations": [
+        "The response records the route location as known evidence and the layout/copy as unknown.",
+        "The response identifies which planning decisions the Figma node and bilingual copy block.",
+        "The response requests a shared page, stable link, repository artifact, or safe export without requesting credentials.",
+        "The response records a provisional route boundary, artifact dependencies, and conditional verification intent while exact design and copy remain blocked.",
+        "The response neither fabricates design/copy nor emits an approval-ready publishing handoff."
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Prepare child tasks for Azure DevOps story 92005. Parent metadata: Area Path Product\\Portal, Iteration Sprint 18, tags security;customer-request, Assigned To Alex, Priority 1, and custom field Risk=High. No metadata policy is documented. Ask the minimum metadata question and show the default metadata map that would be approved.",
+      "expected_output": "One grouped metadata decision; Area and Iteration inherit from target story, type/state use tracker defaults, while tags, assignee, priority, effort/activity, and custom fields are omitted unless explicitly approved. Parent tags are not copied automatically.",
+      "expectations": [
+        "The response asks one grouped metadata confirmation rather than one question per field.",
+        "The default map inherits Area Path and Iteration Path from target story 92005 and uses the tracker default for State.",
+        "The default map omits tags, Assigned To, Priority, activity/effort fields, and Risk.",
+        "The response explicitly avoids copying parent/story tags automatically."
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "The user approved plan revision R3 and asked to publish it. They then changed one acceptance criterion and said 'looks good' without another publication request. Produce the planner handoff decision.",
+      "expected_output": "The content change creates a new revision, invalidates R3 approval, records no publishing approval for the new revision, and requests explicit approval plus publication without mutating tracker state.",
+      "expectations": [
+        "The response increments the changed plan from R3 to a new revision.",
+        "The response invalidates both R3 approval and its publication request for the changed content.",
+        "The response does not treat 'looks good' as explicit approval and publication of the new revision.",
+        "The response requests explicit approval plus publication and states that no tracker mutation occurred."
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Act as the manual Azure DevOps publisher for an approved three-task handoff whose entry checks already pass. MCP is authenticated and can read and create tasks but cannot create dependency relations. A simulated MCP task-creation attempt returns a validation error for Iteration Path. Explain transport choice and next action; do not perform real mutations.",
+      "expected_output": "Use MCP where capability is sufficient and CLI only for missing relation capability; do not switch transports to bypass the Iteration Path validation rejection; stop and report the exact blocker while preserving approved content.",
+      "expectations": [
+        "The response selects MCP for supported reads and task creation, reserving CLI for the missing relation capability.",
+        "The Iteration Path validation error is treated as an Azure DevOps rejection rather than an MCP capability gap.",
+        "The response does not retry task creation through CLI to bypass the validation error.",
+        "The response stops, preserves approved content, and reports the exact blocker without performing real mutations."
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Act as the manual Azure DevOps publisher resuming an approved batch after uncertain network failure. Read-back shows tasks A and B exist exactly, task C is absent, A->B predecessor/successor links are valid, and B->C is absent. Describe the idempotent resume plan and validation outcome requirements.",
+      "expected_output": "Reuse exact A and B, create only C, add only missing approved relations in dependency order, avoid rollback or duplicate creation, then read back exact fields, metadata, parent links, and reciprocal dependency links before declaring completion.",
+      "expectations": [
+        "The response classifies exact tasks A and B as reuse and absent task C as create.",
+        "The response creates only C and adds only the missing B-to-C predecessor relation in dependency order.",
+        "The response avoids rollback, deletion, and duplicate creation.",
+        "Completion requires read-back of exact content, approved metadata, parent links, and reciprocal dependency links for the full batch."
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "Plan a story that adds a privileged bulk customer export. Repository evidence identifies the existing export service, route, audit adapter, and focused test commands, but neither the story nor linked policy identifies which role may export or the required audit retention period. Continue planning as far as safely possible without choosing either policy value.",
+      "expected_output": "A provisional implementation boundary and verification strategy grounded in known code, with authorization and retention recorded as external policy blockers; no invented role, retention period, final tasks, or publishing handoff.",
+      "expectations": [
+        "The response records the known route, export service, audit adapter, and test paths as provisional implementation boundaries.",
+        "The response treats the authorized role and audit retention period as material policy blockers and does not invent either value.",
+        "The response outlines conditional acceptance behavior, dependency structure, and focused verification intent that can be derived safely.",
+        "The response requests an authoritative policy decision or artifact and identifies the owning decision needed.",
+        "The response withholds final implementation-ready task descriptions, approval, and publishing handoff until both policy blockers are resolved."
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "Plan a story to change retry behavior for an existing queue consumer. Repository evidence identifies the consumer, retry configuration, dead-letter path, and unit-test command. The story requires alignment with an operational runbook, but the linked runbook is inaccessible, so alert thresholds, manual replay ownership, and escalation steps are unknown. Continue planning as far as safely possible.",
+      "expected_output": "A provisional code and test boundary plus an explicit runbook dependency, with unknown operational thresholds and ownership left unresolved; safe access requested and no fabricated operations or approval-ready handoff.",
+      "expectations": [
+        "The response records the consumer, retry configuration, dead-letter path, and unit-test command as known implementation and verification evidence.",
+        "The response identifies alert thresholds, manual replay ownership, and escalation steps as decisions blocked by the inaccessible runbook.",
+        "The response records provisional retry/dead-letter scope, an artifact dependency, and conditional verification intent without inventing operational values.",
+        "The response requests safe access to the runbook through a stable link, shared page, repository path, approved integration, or export without requesting credentials.",
+        "The response withholds final implementation-ready task descriptions, approval, and publishing handoff while the operational dependency remains unresolved."
+      ]
+    }
+  ]
+}

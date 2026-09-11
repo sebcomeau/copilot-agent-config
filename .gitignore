@@ -9,10 +9,13 @@
 !CONTRIBUTING.md
 !README.md
 
-# Allow Git to look inside the agents and skills directories
+# Allow Git to look inside the agents and skills directories.
 !agents/
 !skills/
 
-# Keep all contents and subdirectories inside them
+# Keep agent and skill source files.
 !agents/**
 !skills/**
+
+# Ignore generated skill evaluation workspaces.
+skills/*-workspace/
