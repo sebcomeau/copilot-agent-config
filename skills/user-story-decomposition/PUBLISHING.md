@@ -7,25 +7,34 @@ product interpretation.
 
 ## 1. Select Transport
 
-Choose transport by operation capability before preflight:
+Choose transport by explicit environment policy and operation capability before preflight:
 
-1. Use an authenticated Azure DevOps MCP integration when it supports every field,
+1. Under `cli` policy, skip MCP and use Azure CLI for all supported operations.
+2. Under `auto` policy, use an authenticated Azure DevOps MCP integration when it supports every field,
    description-format, and relation operation required for that request.
-2. When MCP is unavailable, disconnected, or lacks an operation, use Azure CLI:
+3. When policy permits fallback and MCP is unavailable, disconnected, or lacks an operation, use Azure CLI:
    - `az boards` for supported reads and operations that preserve the approved contract;
    - `az devops invoke` against Work Item Tracking REST for JSON Patch, Markdown format,
      or relation operations not fully supported by `az boards`.
-3. Keep the selected transport after Azure DevOps accepts the request path. An
+4. Keep the selected transport after Azure DevOps accepts the request path. An
    authorization, validation, conflict, throttling, or service error is a tracker result,
    not permission to retry through another transport.
 
 Record the transport used for every read and mutation. Use the current authenticated
 context; never request, print, persist, or pass authentication material explicitly.
 
+The canonical handoff may include `transportPolicy`: `auto`, `mcp`, or `cli`. If absent,
+use `auto` unless organization or repository instructions define another policy. A
+policy that disables MCP is an instruction to use `cli`, not a reason to probe MCP.
+
 ## 2. Preflight Without Mutation
 
 Re-read the target story and all current child work items immediately before the batch.
 Validate the complete handoff before making the first write:
+
+- When a machine-readable handoff is supplied, run
+  `node scripts/validate-handoff.mjs path/to/handoff.json` and stop on any validation
+  error. The script is structural only; tracker state still requires this preflight.
 
 - `Publishing approval: yes`, explicit publication request, and approval evidence refer
   to the latest `Plan revision`.

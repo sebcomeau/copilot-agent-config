@@ -24,10 +24,12 @@ becomes available.
   implementations look reusable.
 - Record inaccessible required evidence as a blocker and request a safe link, shared
   browser page, repository path, approved integration, or export. Never request secrets.
-- For Azure DevOps reads, prefer an available authenticated MCP integration. Use read-only
-  `az boards` or GET-only `az devops invoke` only when MCP is unavailable or lacks the
-  required read capability. A tracker rejection is a blocker, not a reason to switch
-  transports. Record which transport supplied tracker evidence.
+- For Azure DevOps reads, honor explicit organization or repository transport policy
+  first. Under `auto`, prefer an available authenticated MCP integration; use read-only
+  `az boards` or GET-only `az devops invoke` when MCP is unavailable or lacks the
+  required read capability. Under `cli`, do not probe MCP. A tracker rejection is a
+  blocker, not a reason to switch transports. Record which transport supplied tracker
+  evidence.
 
 For example, when route ownership is known but required design or copy is inaccessible,
 record the known implementation boundary and artifact dependencies, then outline
@@ -186,6 +188,7 @@ Work item type: Task
 Description format: Markdown
 
 Metadata policy:
+
 - System.AreaPath: inherit
 - System.IterationPath: inherit
 - System.State: tracker-default
@@ -195,14 +198,18 @@ Metadata policy:
 - Custom fields: omit or exact approved field/value entries
 
 Tasks:
+
 ### T1 - exact title
+
 <exact complete Markdown description>
 
 Relations:
+
 - Parent: T1 -> target story ID
 - Predecessor: T1 -> T2
 
 External dependencies:
+
 - ... or none
 
 Blockers: none
@@ -213,6 +220,16 @@ Include every task and relation. For non-Azure trackers, return the approved pla
 state that no compatible publisher is defined rather than implying publication support.
 Only the manually selected `story-publisher` may load the publication workflow and mutate
 Azure DevOps.
+
+When a machine-readable handoff is needed, serialize the exact approved content using
+`references/handoff.schema.json` and validate it before publication:
+
+```text
+node scripts/validate-handoff.mjs path/to/handoff.json
+```
+
+The validator checks structure, approval, metadata actions, required task sections,
+stable task keys, relation references, and DAG acyclicity. It performs no tracker calls.
 
 ## Planning Report
 

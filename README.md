@@ -20,6 +20,8 @@ The planner cannot invoke the publisher automatically. Any changed scope, task c
 - [`agents/story-publisher.agent.md`](agents/story-publisher.agent.md): manually invoked Azure DevOps publisher for an exact approved handoff.
 - [`skills/user-story-decomposition/SKILL.md`](skills/user-story-decomposition/SKILL.md): canonical eight-gate planning contract, task format, metadata defaults, revision approval, and handoff schema.
 - [`skills/user-story-decomposition/PUBLISHING.md`](skills/user-story-decomposition/PUBLISHING.md): publisher-only transport, preflight, mutation, recovery, and read-back workflow.
+- [`skills/user-story-decomposition/references/handoff.schema.json`](skills/user-story-decomposition/references/handoff.schema.json): machine-readable handoff contract.
+- [`skills/user-story-decomposition/scripts/validate-handoff.mjs`](skills/user-story-decomposition/scripts/validate-handoff.mjs): dependency-free Node.js structural validator.
 - [`skills/user-story-decomposition/evals/evals.json`](skills/user-story-decomposition/evals/evals.json): behavioral scenarios covering planning boundaries, evidence gaps, metadata, approval, transport errors, and recovery.
 - [`evals/user-story-decomposition/eval.yaml`](evals/user-story-decomposition/eval.yaml): local trigger and anti-trigger evaluation configuration.
 
